@@ -1,0 +1,23 @@
+{
+  "version": "1.0.4",
+  "frozen": true,
+  "qt_platform": "windows",
+  "status": "passed",
+  "checks": [
+    "native window",
+    "shared dictionary",
+    "UTF-8 Markdown save",
+    "date switch",
+    "two separate daily files",
+    "fixed user directory",
+    "restart recovery",
+    "Enter dictionary workflow",
+    "meaning without level suffix",
+    "document directory migration and cleanup",
+    "document directory setting survives restart",
+    "bundled application logo",
+    "shared database relocation and old-file cleanup",
+    "database path survives restart",
+    "three understanding levels and yellow unrecorded words"
+  ]
+}

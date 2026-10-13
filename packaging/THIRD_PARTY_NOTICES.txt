@@ -1,0 +1,30 @@
+WordSense third-party components
+
+Python 3.13.5: Python Software Foundation license, included in licenses/.
+Qt, PySide6 and Shiboken6 6.8.3: LGPLv3 components distributed as separate,
+dynamically loaded libraries. The LGPLv3 and GPLv3 texts are included in licenses/.
+No changes were made to these upstream libraries. You may replace the LGPL
+libraries and reverse engineer the combined application as needed to debug
+modifications to those libraries. Keep ABI-compatible Qt/PySide versions together.
+
+Upstream source for the exact versions:
+https://github.com/qt/qtbase/tree/v6.8.3
+https://github.com/qt/qtsvg/tree/v6.8.3
+https://github.com/qt/qtdeclarative/tree/v6.8.3
+https://github.com/qt/pyside-setup/tree/v6.8.3
+https://github.com/python/cpython/tree/v3.13.5
+
+Qt module attribution and third-party notices:
+https://doc.qt.io/qt-6/qtcore-attribution.html
+https://doc.qt.io/qt-6/qtgui-attribution.html
+https://doc.qt.io/qt-6/qtsvg-attribution.html
+https://doc.qt.io/qt-6/qtqml-attribution.html
+
+SQLite: public-domain SQLite database engine.
+https://www.sqlite.org/copyright.html
+
+PyInstaller bootloader 6.16.0: GPLv2 with an exception for distributing
+applications made using the bootloader; license and exception included in licenses/.
+
+This notice describes third-party components, not a license grant for WordSense
+application code or its logo. The release contains no user documents or vocabulary.
