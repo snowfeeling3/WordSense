@@ -10,7 +10,7 @@
 | `wordsense/storage.py` | Shared SQLite database, atomic daily Markdown, migration and cleanup | 统一词库、每日 Markdown 原子保存、迁移和清理 |
 | `wordsense/window.py` | Dictionary form, keyboard navigation, document menu | 词典表单、键盘流程和文章菜单 |
 | `wordsense/sidebar.py` | In-memory word/meaning search and selection | 内存词条/词义搜索与选择 |
-| `wordsense/theme.py` | Everforest Dark Soft palette and three level labels | Everforest Dark Soft 配色和三种程度标签 |
+| `wordsense/theme.py` | Ink Slate palette and three level labels | Ink Slate 配色和三种程度标签 |
 | `wordsense/branding.py` | Shared application icon path | 统一应用图标路径 |
 | `wordsense/smoke.py` | Temporary-data validation of the packaged runtime | 使用临时数据验证打包运行环境 |
 

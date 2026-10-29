@@ -1,10 +1,10 @@
-# WordSense 1.0.4
+# WordSense 1.0.5
 
 **English** · [简体中文](README.zh-CN.md)
 
 A local-first Windows English writing editor that colors words by your recorded understanding level. Built with Python 3.11+, PySide6 and SQLite. Editing and vocabulary lookup require no account, network API or server.
 
-![WordSense with the Everforest Dark Soft theme](docs/preview.png)
+![WordSense with the Ink Slate theme](docs/preview.png)
 
 ## Features
 
@@ -14,11 +14,11 @@ A local-first Windows English writing editor that colors words by your recorded 
 - Native selection, copy, paste, undo and redo. Enter inserts a new paragraph with two spaces; visual wrapping inserts no characters. Large and multiline pastes are processed in batches.
 - Daily UTF-8 Markdown documents, date switching, export, configurable article folders and verified migration/cleanup.
 - One shared SQLite vocabulary across every article, with an independently configurable database location.
-- Everforest Dark Soft colors, a book-shaped W logo and a compact circular document menu. The current application UI uses Chinese labels; documentation is bilingual.
+- Ink Slate colors, a book-shaped W logo and a clearly labeled document menu. The current application UI uses Chinese labels; documentation is bilingual.
 
 ## Download the Windows build
 
-Get `WordSense-v1.0.4-Windows-x64.zip` from the [v1.0.4 release](https://github.com/snowfeeling3/WordSense/releases/tag/v1.0.4). Extract the complete folder and double-click `WordSense.exe`. Python is included; keep `_internal` beside the executable.
+Get `WordSense-v1.0.5-Windows-x64.zip` from the [v1.0.5 release](https://github.com/snowfeeling3/WordSense/releases/tag/v1.0.5). Extract the complete folder and double-click `WordSense.exe`. Python is included; keep `_internal` beside the executable.
 
 Do not run the intermediate EXE under `build/` or copy the EXE alone. This is an unsigned portable Windows x64 package with a SHA-256 checksum, usage instructions and third-party license texts. It contains no user documents or vocabulary.
 
@@ -34,7 +34,7 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m wordsense
 ```
 
-After installing dependencies, `start_wordsense.cmd` also launches the source application. `WordSense.cmd` launches an already downloaded or built `dist/WordSense-v1.0.4/WordSense.exe`; that file is not included in a fresh source clone.
+After installing dependencies, `start_wordsense.cmd` also launches the source application. `WordSense.cmd` launches an already downloaded or built `dist/WordSense-v1.0.5/WordSense.exe`; that file is not included in a fresh source clone.
 
 Validated on Windows 11, Python 3.13.5 and PySide6 6.8.3. The code uses Qt, but full desktop behavior on other platforms has not been verified.
 
@@ -47,7 +47,7 @@ Validated on Windows 11, Python 3.13.5 and PySide6 6.8.3. The code uses Qt, but 
 | Save vocabulary and return to writing | Enter in the meaning field, or 保存 / 更新 (Save / Update) |
 | Save the current article | Ctrl+S |
 | Export Markdown | Ctrl+Shift+S |
-| Change date or storage folders | Circular ⋯ menu at the top right |
+| Change date or storage folders | Document menu at the top right |
 
 A token being edited stays yellow until a delimiter completes it. Unknown words remain yellow. Changing a vocabulary level triggers a separate full highlight refresh. Markdown contains plain text, not colors; reopening an old article applies the current shared vocabulary. Startup opens today's document. Writing across midnight does not silently switch its date.
 
@@ -78,7 +78,7 @@ Legacy level 1 becomes level 2: the old two intermediate categories are merged i
 
 The current 48 tests cover coloring, editing boundaries, bulk paste, UTF-16, undo/redo, keyboard flow, daily storage, directory migrations, collision protection and legacy vocabulary conversion. Persistence tests use temporary databases and files.
 
-Historical local measurements: 120,000-character multiline paste 74.632 ms; two-key local edits median 0.076 ms and P95 0.093 ms, affecting at most two blocks. These offscreen measurements exclude screen presentation and disk writes; results vary by machine. See [bilingual architecture and validation](docs/ARCHITECTURE.md), [raw benchmark data](benchmarks/results.json) and [Chinese validation history](docs/validation.md).
+Historical local measurements: 120,000-character multiline paste 74.632 ms; two-key local edits median 0.076 ms and P95 0.093 ms, affecting at most two blocks. These offscreen measurements exclude screen presentation and disk writes; results vary by machine. See [bilingual architecture and validation](docs/ARCHITECTURE.md), [raw benchmark data](benchmarks/results.json).
 
 Highlighting is paragraph-granular, so very long single paragraphs, initial loads and global vocabulary refreshes may occupy the GUI thread briefly. Undo history and cursor position are not preserved across documents or restarts. Avoid concurrent writers or old app instances editing the same files.
 
@@ -98,4 +98,4 @@ The build generates a portable folder, ZIP and checksum, then validates the pack
 
 `wordsense/` contains the app; `tests/` the tests; `tools/` verification and icon tooling; `packaging/` PyInstaller configuration and notices; `assets/` the logo; `benchmarks/` performance scripts; and `docs/` documentation and validation records.
 
-Colors are based on [Everforest](https://github.com/sainnhe/everforest). Third-party components are documented in [THIRD_PARTY_NOTICES.txt](packaging/THIRD_PARTY_NOTICES.txt) and [license texts](packaging/licenses). No separate open-source license has yet been specified for the WordSense application code; third-party licenses do not constitute an application license.
+Colors are based on [Everforest](https://github.com/sainnhe/everforest). Third-party components are documented in [THIRD_PARTY_NOTICES.txt](packaging/THIRD_PARTY_NOTICES.txt) and [license texts](packaging/licenses). WordSense application code is available under the [MIT license](LICENSE). Third-party components retain their own licenses.

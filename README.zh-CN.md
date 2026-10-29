@@ -1,10 +1,10 @@
-# WordSense 1.0.4
+# WordSense 1.0.5
 
 [English](README.md) · **简体中文**
 
 本地优先的 Windows 英语写作与词汇理解标记应用。使用 Python 3.11+、PySide6 和 SQLite；编辑及词库查询不依赖网络 API、账号或服务器。
 
-![WordSense：Everforest Dark Soft 界面](docs/preview.png)
+![WordSense：Ink Slate 界面](docs/preview.png)
 
 ## 功能
 
@@ -14,11 +14,11 @@
 - 原生选择、复制、粘贴、撤销、重做；Enter 创建新段落并补两个空格，自动软换行不插入字符。多行粘贴批量处理。
 - 每日文章保存为 UTF-8 Markdown，支持切换日期、另存为、自定义目录以及迁移后的旧文件清理。
 - 所有文章共用一个 SQLite 词库；词库位置也可以独立设置和迁移。
-- Everforest Dark Soft 主题、书页 W Logo、顶部圆形文档菜单。当前应用界面使用中文，文档提供中英双语。
+- Ink Slate 主题、书页 W Logo、顶部文档菜单。当前应用界面使用中文，文档提供中英双语。
 
 ## 下载 Windows 版
 
-在 [v1.0.4 Release](https://github.com/snowfeeling3/WordSense/releases/tag/v1.0.4) 下载 `WordSense-v1.0.4-Windows-x64.zip`，解压完整文件夹后双击 `WordSense.exe`。无需安装 Python，保留旁边的 `_internal` 文件夹。
+在 [v1.0.5 Release](https://github.com/snowfeeling3/WordSense/releases/tag/v1.0.5) 下载 `WordSense-v1.0.5-Windows-x64.zip`，解压完整文件夹后双击 `WordSense.exe`。无需安装 Python，保留旁边的 `_internal` 文件夹。
 
 不要运行 `build/` 中的中间 EXE，也不要仅复制 EXE。发布包为未签名的 Windows x64 免安装版；附 SHA-256 校验文件、使用说明与第三方组件许可文本。
 
@@ -34,7 +34,7 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m wordsense
 ```
 
-安装完成后也可双击 `start_wordsense.cmd`。根目录的 `WordSense.cmd` 用于启动已下载或构建的 `dist/WordSense-v1.0.4/WordSense.exe`，不是首次克隆时的源码入口。
+安装完成后也可双击 `start_wordsense.cmd`。根目录的 `WordSense.cmd` 用于启动已下载或构建的 `dist/WordSense-v1.0.5/WordSense.exe`，不是首次克隆时的源码入口。
 
 验证环境：Windows 11、Python 3.13.5、PySide6 6.8.3。源码采用 Qt，但其他系统的完整桌面行为尚未验证。
 
@@ -96,4 +96,4 @@ python -m venv .venv
 
 `wordsense/` 为应用源码，`tests/` 为测试，`tools/` 为验证和图标工具，`packaging/` 为 PyInstaller 构建与许可材料，`assets/` 为 Logo，`benchmarks/` 为基准，`docs/` 为说明和验证记录。
 
-配色来源：[Everforest](https://github.com/sainnhe/everforest)。第三方组件说明见 [THIRD_PARTY_NOTICES.txt](packaging/THIRD_PARTY_NOTICES.txt) 和 [许可文本](packaging/licenses)。仓库未单独指定 WordSense 应用源码的开源许可证，第三方许可不等同于应用源码许可。
+配色来源：[Everforest](https://github.com/sainnhe/everforest)。第三方组件说明见 [THIRD_PARTY_NOTICES.txt](packaging/THIRD_PARTY_NOTICES.txt) 和 [许可文本](packaging/licenses)。WordSense 应用源码采用 [MIT 许可证](LICENSE)，第三方组件遵循各自许可。

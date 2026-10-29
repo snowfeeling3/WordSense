@@ -16,3 +16,7 @@ settings.json
 documents/
 [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].md
 *.log
+
+# Local verification output; never publish machine paths or runtime captures.
+docs/*-smoke.json
+docs/*-smoke.png

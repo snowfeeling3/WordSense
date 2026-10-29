@@ -15,6 +15,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Build failed.' }
 $releaseDirectory = Join-Path $projectRoot ("dist\WordSense-v" + $releaseVersion)
 Copy-Item -LiteralPath (Join-Path $projectRoot 'packaging\使用说明.txt') -Destination $releaseDirectory
 Copy-Item -LiteralPath (Join-Path $projectRoot 'packaging\THIRD_PARTY_NOTICES.txt') -Destination $releaseDirectory
+Copy-Item -LiteralPath (Join-Path $projectRoot 'LICENSE') -Destination $releaseDirectory
 Copy-Item -LiteralPath (Join-Path $projectRoot 'packaging\licenses') -Destination $releaseDirectory -Recurse
 $reportPath = Join-Path $projectRoot 'docs\packaged-smoke.json'
 $smokeProcess = Start-Process -FilePath (Join-Path $releaseDirectory 'WordSense.exe') -ArgumentList @('--smoke-test', ('"' + $reportPath + '"')) -PassThru -WindowStyle Hidden
