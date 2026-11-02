@@ -1,10 +1,18 @@
-# WordSense 1.0.5
+# WordSense 1.0.9
 
 **English** · [简体中文](README.zh-CN.md)
 
 A local-first Windows English writing editor that colors words by your recorded understanding level. Built with Python 3.11+, PySide6 and SQLite. Editing and vocabulary lookup require no account, network API or server.
 
 ![WordSense with the Ink Slate theme](docs/preview.png)
+
+## Version 1.0.9 features
+
+Vocabulary saving updates one sidebar row and only recolors affected paragraphs. Definition-only edits skip coloring; existing word edits reuse spelling aliases. Run `python -m benchmarks.vocabulary_save` for synthetic timings.
+
+Document switching suspends layout and highlighting during replacement, then highlights once. Saving still completes before switching. Run `python -m benchmarks.document_switch` for synthetic timings.
+
+Click an English word in the document to inspect and edit its definition above without moving focus away from writing. Common past, participle and -ing forms inherit the recorded root definition and color. Saving the displayed root updates its aliases. Type a surface form into the word field to record it separately. Explicit entries take priority; ambiguous aliases are skipped. Offline spelling rules are not a complete English dictionary or translation service. Aliases are computed, not duplicated in the database.
 
 ## Features
 
@@ -18,7 +26,7 @@ A local-first Windows English writing editor that colors words by your recorded 
 
 ## Download the Windows build
 
-Get `WordSense-v1.0.5-Windows-x64.zip` from the [v1.0.5 release](https://github.com/snowfeeling3/WordSense/releases/tag/v1.0.5). Extract the complete folder and double-click `WordSense.exe`. Python is included; keep `_internal` beside the executable.
+Get `WordSense-v1.0.9-Windows-x64.zip` from the [v1.0.9 release](https://github.com/snowfeeling3/WordSense/releases/tag/v1.0.9). Extract the complete folder and double-click `WordSense.exe`. Python is included; keep `_internal` beside the executable.
 
 Do not run the intermediate EXE under `build/` or copy the EXE alone. This is an unsigned portable Windows x64 package with a SHA-256 checksum, usage instructions and third-party license texts. It contains no user documents or vocabulary.
 
@@ -34,7 +42,7 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m wordsense
 ```
 
-After installing dependencies, `start_wordsense.cmd` also launches the source application. `WordSense.cmd` launches an already downloaded or built `dist/WordSense-v1.0.5/WordSense.exe`; that file is not included in a fresh source clone.
+After installing dependencies, `start_wordsense.cmd` also launches the source application. `WordSense.cmd` launches an already downloaded or built `dist/WordSense-v1.0.9/WordSense.exe`; that file is not included in a fresh source clone.
 
 Validated on Windows 11, Python 3.13.5 and PySide6 6.8.3. The code uses Qt, but full desktop behavior on other platforms has not been verified.
 
@@ -76,7 +84,7 @@ Legacy level 1 becomes level 2: the old two intermediate categories are merged i
 .\.venv\Scripts\python.exe -m benchmarks.benchmark
 ```
 
-The current 48 tests cover coloring, editing boundaries, bulk paste, UTF-16, undo/redo, keyboard flow, daily storage, directory migrations, collision protection and legacy vocabulary conversion. Persistence tests use temporary databases and files.
+The current 56 tests cover coloring, editing boundaries, bulk paste, UTF-16, undo/redo, keyboard flow, daily storage, directory migrations, collision protection and legacy vocabulary conversion. Persistence tests use temporary databases and files.
 
 Historical local measurements: 120,000-character multiline paste 74.632 ms; two-key local edits median 0.076 ms and P95 0.093 ms, affecting at most two blocks. These offscreen measurements exclude screen presentation and disk writes; results vary by machine. See [bilingual architecture and validation](docs/ARCHITECTURE.md), [raw benchmark data](benchmarks/results.json).
 
@@ -99,3 +107,5 @@ The build generates a portable folder, ZIP and checksum, then validates the pack
 `wordsense/` contains the app; `tests/` the tests; `tools/` verification and icon tooling; `packaging/` PyInstaller configuration and notices; `assets/` the logo; `benchmarks/` performance scripts; and `docs/` documentation and validation records.
 
 Colors are based on [Everforest](https://github.com/sainnhe/everforest). Third-party components are documented in [THIRD_PARTY_NOTICES.txt](packaging/THIRD_PARTY_NOTICES.txt) and [license texts](packaging/licenses). WordSense application code is available under the [MIT license](LICENSE). Third-party components retain their own licenses.
+
+[Release validation / 发布验证](docs/RELEASE_VALIDATION.md) · [Changelog](CHANGELOG.md)

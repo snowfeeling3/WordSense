@@ -12,6 +12,7 @@ from .sidebar import VocabularySidebar
 from . import __version__
 from .branding import app_icon
 from .theme import STYLE, LEVEL_NAMES, configure_window
+from .inflections import build_aliases
 
 class MainWindow(QMainWindow):
     def __init__(self, storage=None):
@@ -123,6 +124,7 @@ class MainWindow(QMainWindow):
         self.document_menu.addAction("设置词库位置…", self.choose_database_directory)
         self.document_menu.addAction("清理旧词库残留", self.cleanup_old_database)
         self.editor = WordEditor(self.words)
+        self.editor.word_clicked.connect(self.inspect_document_word)
         self.editor.setAccessibleName("写作正文")
         self.editor.setPlaceholderText("从一句英文开始，记录今天的想法…")
         self.editor.load_text(self.storage.load_text(self.document_date))
@@ -136,6 +138,12 @@ class MainWindow(QMainWindow):
         splitter.setStretchFactor(1, 1)
         splitter.setSizes([260, 800])
         layout.addWidget(splitter, 1)
+        self.word_count_label = QLabel()
+        self.word_count_label.setAccessibleName("当前文档英文词数")
+        self.word_count_label.setToolTip("按连续英文字母统计，重复单词分别计数；不计中文、数字和标点")
+        self.statusBar().addPermanentWidget(self.word_count_label)
+        self.editor.word_count_changed.connect(self.update_word_count)
+        self.update_word_count(self.editor.word_count)
         self.statusBar().showMessage(f"已加载 {len(self.words)} 个单词 · 文本自动保存")
         self.save_timer = QTimer(self)
         self.save_timer.setSingleShot(True)
@@ -154,6 +162,9 @@ class MainWindow(QMainWindow):
             self.addAction(action)
         self.editor.setFocus()
 
+    def update_word_count(self, count):
+        self.word_count_label.setText(f"词数：{count:,}")
+
     def lookup_word(self, text):
         entry = self.words.get(text.strip().casefold())
         if entry:
@@ -166,6 +177,15 @@ class MainWindow(QMainWindow):
     def select_dictionary_word(self, word):
         self.word_input.setText(word)
         self.lookup_word(word)
+
+    def inspect_document_word(self, word):
+        key = word.casefold()
+        base = self.editor.highlighter.aliases.get(key, key)
+        self.select_dictionary_word(base)
+        if base != key:
+            self.statusBar().showMessage(f"{word} → 原词 {base} · 修改并保存将同步关联形式；输入变形词可单独记录")
+        else:
+            self.statusBar().showMessage(f"查看 {word} · 可在上方修改词义，未记录的单词可直接保存")
 
     def focus_word_input(self):
         self.word_input.setFocus(Qt.FocusReason.ShortcutFocusReason)
@@ -186,9 +206,20 @@ class MainWindow(QMainWindow):
             if isinstance(error, ValueError):
                 self.focus_word_input()
             return False
+        previous = self.words.get(key)
         self.words[key] = (meaning, level)
-        self.sidebar.refresh()
-        self.editor.highlighter.rehighlight()
+        highlighter = self.editor.highlighter
+        affected = set()
+        if previous is None:
+            old_aliases = highlighter.aliases
+            highlighter.aliases = build_aliases(self.words)
+            affected = {form for form in old_aliases.keys() | highlighter.aliases.keys()
+                        if old_aliases.get(form) != highlighter.aliases.get(form)}
+            affected.add(key)
+        elif previous[1] != level:
+            affected = {key} | {form for form, base in highlighter.aliases.items() if base == key}
+        self.sidebar.update_word(key)
+        highlighter.refresh_words(affected)
         self.statusBar().showMessage(f"已保存 {key} · 词典共 {len(self.words)} 个单词")
         self.editor.setFocus(Qt.FocusReason.OtherFocusReason)
         return True

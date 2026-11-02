@@ -47,6 +47,7 @@ class VocabularySidebar(QWidget):
         self.word_list.blockSignals(True)
         try:
             self.word_list.clear()
+            self._items = {}
             for word, (meaning, level) in sorted(self.words.items()):
                 detail = meaning or "未填写词义"
                 item = QListWidgetItem(f"{word}\n{detail}")
@@ -54,11 +55,38 @@ class VocabularySidebar(QWidget):
                 item.setForeground(QColor(COLORS[level]))
                 item.setToolTip(f"{word}\n{detail}")
                 self.word_list.addItem(item)
+                self._items[word] = item
                 if word == selected:
                     self.word_list.setCurrentItem(item)
             self.filter_words()
         finally:
             self.word_list.blockSignals(False)
+
+    def update_word(self, word):
+        """Keep existing list items, selection, scroll and active filter intact."""
+        from bisect import bisect_left
+        previous = self.word_list.blockSignals(True)
+        try:
+            item = self._items.get(word)
+            was_visible = item is not None and not item.isHidden()
+            if item is None:
+                index = bisect_left(sorted(self._items), word)
+                item = QListWidgetItem()
+                item.setData(Qt.ItemDataRole.UserRole, word)
+                self.word_list.insertItem(index, item)
+                self._items[word] = item
+            meaning, level = self.words[word]
+            detail = meaning or "未填写词义"
+            item.setText(f"{word}\n{detail}")
+            item.setForeground(QColor(COLORS[level]))
+            item.setToolTip(f"{word}\n{detail}")
+            query = self.search_input.text().strip().casefold()
+            matched = query in word or query in meaning.casefold()
+            item.setHidden(not matched)
+            self._visible_count += int(matched) - int(was_visible)
+            self._update_count()
+        finally:
+            self.word_list.blockSignals(previous)
 
     def filter_words(self, text=None):
         query = self.search_input.text().strip().casefold()
@@ -70,6 +98,11 @@ class VocabularySidebar(QWidget):
             matched = query in word or query in meaning.casefold()
             item.setHidden(not matched)
             visible += matched
+        self._visible_count = visible
+        self._update_count()
+
+    def _update_count(self):
+        visible = self._visible_count
         if not self.words:
             self.result_label.setText("词典为空，请在上方添加单词")
         elif not visible:

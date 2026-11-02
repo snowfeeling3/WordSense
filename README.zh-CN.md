@@ -1,10 +1,20 @@
-# WordSense 1.0.5
+# WordSense 1.0.9
 
 [English](README.md) · **简体中文**
 
 本地优先的 Windows 英语写作与词汇理解标记应用。使用 Python 3.11+、PySide6 和 SQLite；编辑及词库查询不依赖网络 API、账号或服务器。
 
 ![WordSense：Ink Slate 界面](docs/preview.png)
+
+## 本地 v1.0.9 新功能
+
+窗口右下角常驻显示当前文档词数，输入、粘贴、撤销和切换文档时自动更新。按连续英文字母计数，重复词分别计数，中文、数字和标点不计入；连字符与撇号会分隔单词，与正文高亮的分词规则一致。统计缓存每段词数，局部编辑只重算受影响段落。
+
+优化词条保存：只更新对应列表项和受影响段落；只修改词义时跳过着色，已有词条复用变形关联。可运行 `python -m benchmarks.vocabulary_save` 使用模拟词库复测。
+
+优化文档切换：正文替换期间暂停布局与高亮，加载后统一排版并只高亮一次，仍在切换前确认文章保存完成。可运行 `python -m benchmarks.document_switch` 使用临时文档复测。
+
+点击正文英文单词可在上方查看和修改词义，不会抢走正文焦点。常见过去式、过去分词及 -ing 形式自动关联已记录原词的词义和颜色；上方显示原词时，保存会更新关联形式。若要单独记录变形，请在单词框手动输入该变形再保存。显式词条优先，歧义关联跳过。规则并非完整英语词典，也不自动翻译；词典仅保存实际录入的词条，关联形式不重复写入数据库。
 
 ## 功能
 
@@ -18,7 +28,7 @@
 
 ## 下载 Windows 版
 
-在 [v1.0.5 Release](https://github.com/snowfeeling3/WordSense/releases/tag/v1.0.5) 下载 `WordSense-v1.0.5-Windows-x64.zip`，解压完整文件夹后双击 `WordSense.exe`。无需安装 Python，保留旁边的 `_internal` 文件夹。
+在 [v1.0.9 Release](https://github.com/snowfeeling3/WordSense/releases/tag/v1.0.9) 下载 `WordSense-v1.0.9-Windows-x64.zip`，解压完整文件夹后双击 `WordSense.exe`。无需安装 Python，保留旁边的 `_internal` 文件夹。
 
 不要运行 `build/` 中的中间 EXE，也不要仅复制 EXE。发布包为未签名的 Windows x64 免安装版；附 SHA-256 校验文件、使用说明与第三方组件许可文本。
 
@@ -34,7 +44,7 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m wordsense
 ```
 
-安装完成后也可双击 `start_wordsense.cmd`。根目录的 `WordSense.cmd` 用于启动已下载或构建的 `dist/WordSense-v1.0.5/WordSense.exe`，不是首次克隆时的源码入口。
+安装完成后也可双击 `start_wordsense.cmd`。根目录的 `WordSense.cmd` 用于启动已下载或构建的 `dist/WordSense-v1.0.9/WordSense.exe`，不是首次克隆时的源码入口。
 
 验证环境：Windows 11、Python 3.13.5、PySide6 6.8.3。源码采用 Qt，但其他系统的完整桌面行为尚未验证。
 
@@ -74,7 +84,7 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m benchmarks.benchmark
 ```
 
-当前 48 项自动化测试覆盖颜色判定、编辑边界、长文本粘贴、UTF-16、撤销重做、键盘操作、存储、目录迁移、冲突保护和旧词库转换。测试只使用临时数据库和文档。
+当前 56 项自动化测试覆盖颜色判定、编辑边界、长文本粘贴、UTF-16、撤销重做、键盘操作、存储、目录迁移、冲突保护和旧词库转换。测试只使用临时数据库和文档。
 
 历史本机基准：12 万字符、6000 段落粘贴约 74.632 ms；局部两键输入中位数 0.076 ms、P95 0.093 ms，最多处理两个文本块。测试使用 Qt offscreen，不包含屏幕绘制和磁盘 I/O；其他设备可能不同。详见 [英文架构及验证说明](docs/ARCHITECTURE.md)、[原始基准](benchmarks/results.json) 与 [中文验证记录](docs/ARCHITECTURE.md)。
 
@@ -97,3 +107,5 @@ python -m venv .venv
 `wordsense/` 为应用源码，`tests/` 为测试，`tools/` 为验证和图标工具，`packaging/` 为 PyInstaller 构建与许可材料，`assets/` 为 Logo，`benchmarks/` 为基准，`docs/` 为说明和验证记录。
 
 配色来源：[Everforest](https://github.com/sainnhe/everforest)。第三方组件说明见 [THIRD_PARTY_NOTICES.txt](packaging/THIRD_PARTY_NOTICES.txt) 和 [许可文本](packaging/licenses)。WordSense 应用源码采用 [MIT 许可证](LICENSE)，第三方组件遵循各自许可。
+
+[Release validation / 发布验证](docs/RELEASE_VALIDATION.md) · [Changelog](CHANGELOG.md)

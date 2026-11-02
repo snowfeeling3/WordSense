@@ -1,4 +1,4 @@
-WordSense 1.0.5 · Windows x64
+WordSense 1.0.9 · Windows x64
 
 解压完整文件夹，双击 WordSense.exe。无需安装 Python，请保留 _internal 文件夹。
 
